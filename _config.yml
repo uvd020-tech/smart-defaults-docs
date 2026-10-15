@@ -1,0 +1,25 @@
+# Source of truth for the public documentation site. This repository is
+# private, so GitHub Pages cannot build from it on the free plan: the site is
+# published from the public mirror repository uvd020-tech/smart-defaults-docs
+# (these files copied into its root, Pages: main -> /).
+# Edit here, then copy the changed files over to that repository.
+theme: jekyll-theme-minimal
+title: Smart Defaults
+description: Default field values in the Jira Cloud Create dialog — user guide, privacy policy and support.
+show_downloads: false
+
+# Sidebar navigation, rendered by _layouts/default.html. Keep the order in sync
+# with the table of contents in index.md.
+nav:
+  - title: Overview
+    url: /
+  - title: Rules and fields
+    url: /rules.html
+  - title: FAQ
+    url: /faq.html
+  - title: Privacy policy
+    url: /privacy.html
+  - title: Security policy
+    url: /security.html
+  - title: Support
+    url: /support.html
