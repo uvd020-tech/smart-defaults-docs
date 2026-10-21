@@ -37,11 +37,13 @@ the person can change or clear any of them first.
 ## What about sub-tasks?
 
 You can create a rule for a sub-task type; the editor marks these types with
-“(sub-task)”. In the editor we say: sub-tasks get defaults only when Jira opens
-the Create dialog for them — from **Create subtask**, when Summary and at least
-one other field are required for that issue type. Sub-task types are not offered
-in the issue type list of the regular Create dialog (checked on one site on
-15 October 2026). We have not tested the **Create subtask** scenario yet.
+“(sub-task)”. Sub-tasks get defaults only when Jira opens the Create dialog for
+them: from **Create subtask**, when at least one more field besides Summary is
+set as required for that sub-task type. Otherwise Jira creates the sub-task
+straight from the inline “Name this subtask” box, and no defaults are applied.
+We checked both cases on one site on 22 October 2026. Sub-task types are not
+offered in the issue type list of the regular Create dialog (checked on one site
+on 15 October 2026).
 
 ## Other apps also change the Create dialog. What happens?
 
