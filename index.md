@@ -4,7 +4,7 @@ title: Smart Defaults — Documentation
 
 # Smart Defaults
 
-Smart Defaults for Jira Cloud fills fields of the **Create** dialog with values
+Smart Defaults fills fields of the **Create** dialog with values
 you choose in advance. You define a rule for a project and an issue type — for
 example *Priority = High* and a label for every Bug in one project — and the
 dialog opens with those values already in place.

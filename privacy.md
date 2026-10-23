@@ -4,7 +4,7 @@ title: Privacy Policy — Smart Defaults
 
 # Privacy Policy
 
-**App:** Smart Defaults for Jira Cloud
+**App:** Smart Defaults
 
 **Last updated:** 15 October 2026
 
