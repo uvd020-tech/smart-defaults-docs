@@ -30,9 +30,12 @@ filled in a team-managed project and in a company-managed project.
 
 ## Does it change existing issues?
 
-No. Smart Defaults only fills the Create dialog. The issue is created when the
+No. Smart Defaults fills the Create dialog. The issue is created when the
 person clicks **Create**, with whatever values the dialog holds at that moment —
-the person can change or clear any of them first.
+the person can change or clear any of them first. Issues created earlier are
+never changed. The only edit the app makes to an issue is the label
+`priority-default` right after the issue is created — see
+[Mark issues created with the default Priority](rules.md#mark-issues-created-with-the-default-priority).
 
 ## What about sub-tasks?
 

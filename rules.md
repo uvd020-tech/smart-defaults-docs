@@ -13,8 +13,11 @@ fields with the value each one should get. There is at most one rule per
 project and issue type pair; saving again replaces it.
 
 The rule is applied when the **Create** dialog is open for that project and
-issue type. Smart Defaults only fills the dialog: nothing is created until the
-person clicks **Create**, and existing issues are never changed.
+issue type. Smart Defaults fills the dialog: nothing is created until the
+person clicks **Create**, and the person can change any value first. Issues
+created earlier are never changed. The only edit the app makes to an issue is
+the label described in
+[Mark issues created with the default Priority](#mark-issues-created-with-the-default-priority).
 
 ## Supported fields
 
@@ -46,31 +49,40 @@ for values that Jira sets itself — Priority always starts with a system defaul
 A field counts as empty when it has no value, when Assignee is *Automatic*, or
 when the description has no text.
 
-## Mark issues where Priority was not changed
+## Mark issues created with the default Priority
 
-A default Priority hides one thing: an issue created with *Medium* may have
-Medium because someone chose it, or because nobody looked at the field. To tell
-these apart, turn on **Mark issues where Priority was not changed** in the rule.
-The option is shown when both Priority and Labels are on the create screen of
-the issue type.
+A default Priority hides one thing: an issue with *Medium* may have Medium
+because someone chose it, or because nobody looked at the field. To find the
+issues worth a second look, turn on **Mark issues created with the default
+Priority** in the rule. The option is shown when both Priority and Labels are
+on the create screen of the issue type.
 
-- When the Create dialog opens, the label `priority-default` is added to Labels,
-  next to any labels from the rule.
-- As soon as someone picks another priority in the dialog, the label is removed.
-- An issue created without touching Priority keeps the label. Find these issues
-  with the JQL `labels = priority-default`, for example in a triage filter.
+Right after an issue of that project and issue type is created, the app checks
+its Priority:
 
-The mark works with or without a Priority default in the same rule; a rule can
-consist of the mark alone.
+- Priority equals the default → the app adds the label `priority-default`.
+- Priority is anything else → the issue has no `priority-default` label; if it
+  came with one (copied by **Clone** or typed by hand), the app removes it.
 
-Smart Defaults does not change issues after they are created, so the label stays
-on the issue until someone removes it — for example, when the priority has been
-reviewed.
+The default is the Priority of the same rule when **Replace a value that is
+already filled** is on for it; otherwise it is the default priority of the
+project's priority scheme in Jira.
 
-If someone switches the project or issue type in the dialog, Jira carries the
-filled fields over, Labels included. When the new pair has a Smart Defaults rule
-without the mark, the label is removed. When the new pair has no rule at all,
-the label stays and has to be removed by hand.
+The check looks only at the Priority of the created issue, not at how the issue
+was created. We checked it on one site on 24 November 2026: the Create dialog
+(including **Create another**, a different issue type picked in the dialog, and
+Labels hidden from the dialog), creating on a board, **Clone**, and the REST API.
+Find the marked issues with the JQL `labels = priority-default`, for example in
+a triage filter.
+
+For issue types where the mark is off, including types without a rule, the app
+removes `priority-default` from newly created issues, so the label always means
+the same thing.
+
+The app checks each issue once, when it is created. Changing Priority later does
+not add or remove the label: remove it yourself when the priority has been
+reviewed. The label is set by the app, so the issue history shows the change by
+Smart Defaults; the app asks Jira not to send notifications for this edit.
 
 ## Current user
 

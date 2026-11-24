@@ -61,6 +61,12 @@ In the Create dialog the app also reads the create screen's allowed values
 (options, components, versions), so that it never inserts a value that has been
 deleted.
 
+As the app itself, right after an issue is created, it reads the issue's
+Priority, Labels, project and issue type, and the default priority of the
+project's priority scheme, to set or remove the label `priority-default`
+([details](rules.md#mark-issues-created-with-the-default-priority)). The app
+reads no other issue fields and does not store what it reads.
+
 ## What the app writes to Jira
 
 - UI modifications, created, updated and deleted by the app when rules are
@@ -69,7 +75,12 @@ deleted.
   not saved anywhere until the person clicks Create, and the person can change
   them first.
 
-The app does not create or change issues.
+- The label `priority-default` on a newly created issue: added when the rule
+  for its project and issue type has the Priority mark on and the issue has the
+  default Priority, removed otherwise. The app asks Jira not to send
+  notifications for this edit.
+
+The app does not create issues and does not change any other field of an issue.
 
 ## Logs
 
@@ -77,6 +88,8 @@ The app does not create or change issues.
   its name and the error text; for failed Jira requests this includes the HTTP
   method, the status and the first 300 characters of Jira's response. After
   installation the app logs how many UI modifications it removed and created.
+  When it adds or removes the label `priority-default`, it logs the action and
+  the issue's numeric ID.
   The app itself does not write rule values or people's names to the logs; the
   error text of Jira is logged as Jira returned it.
 - **The person's browser console**: in the Create dialog the app writes one

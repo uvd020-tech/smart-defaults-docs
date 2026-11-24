@@ -24,7 +24,7 @@ Full detail is in the [Privacy Policy](privacy.md); in summary:
 
 - We store the rules administrators create: project and issue type, the fields with their default values, and the account ID of the person who last changed a rule. They are kept in Forge storage and, as a UI modification, in your Jira site.
 - We never store passwords, email addresses, payment details, or issue content.
-- The app does not create or change issues. It fills the Create dialog in the person's browser; the issue is created only when the person clicks Create.
+- The app does not create issues. It fills the Create dialog in the person's browser; the issue is created only when the person clicks Create. The only edit it makes to an issue is the label `priority-default` right after the issue is created ([details](rules.md#mark-issues-created-with-the-default-priority)).
 
 ## 3. Authentication and Access Control
 
@@ -38,15 +38,17 @@ Access to rules is checked on the server, for every request:
 
 Jira allows UI modifications to be managed only by the app itself, so the app creates, updates and deletes them under its own identity, after the permission check above.
 
-The app's requests to Jira are limited to: the person's own permissions, the project list and a project's name, the create-screen metadata of an issue type, people search and lookup, and the app's own UI modifications.
+The label `priority-default` is also set under the app's own identity, in response to Jira's issue-created event: the app reads the new issue's Priority, Labels, project and issue type and the project's default priority, and adds or removes only that label.
+
+The app's requests to Jira are limited to: the person's own permissions, the project list and a project's name, the create-screen metadata of an issue type, people search and lookup, the app's own UI modifications, and, for a newly created issue, its Priority, Labels, project and issue type, the project's priority scheme, and the edit of the label `priority-default`.
 
 ## 4. Declared Scopes
 
 | Scope | Used for |
 | --- | --- |
-| `read:jira-work` | Permissions check, projects, create-screen metadata, reading the app's UI modifications |
+| `read:jira-work` | Permissions check, projects, create-screen metadata, reading the app's UI modifications, reading a new issue's Priority and Labels and the project's priority scheme |
 | `read:jira-user` | Searching for people in the rule editor |
-| `write:jira-work` | Filling values in the Create dialog |
+| `write:jira-work` | Filling values in the Create dialog; adding or removing the label `priority-default` on a new issue |
 | `manage:jira-configuration`, `manage:jira-project` | Required by Atlassian: the UI modifications module needs all scopes of its group to be declared |
 | `read:app-data:jira`, `write:app-data:jira` | Recommended by Atlassian's documentation for the UI modifications REST API |
 | `storage:app` | Forge storage for the rules |
