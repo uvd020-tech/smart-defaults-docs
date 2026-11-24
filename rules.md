@@ -46,6 +46,32 @@ for values that Jira sets itself — Priority always starts with a system defaul
 A field counts as empty when it has no value, when Assignee is *Automatic*, or
 when the description has no text.
 
+## Mark issues where Priority was not changed
+
+A default Priority hides one thing: an issue created with *Medium* may have
+Medium because someone chose it, or because nobody looked at the field. To tell
+these apart, turn on **Mark issues where Priority was not changed** in the rule.
+The option is shown when both Priority and Labels are on the create screen of
+the issue type.
+
+- When the Create dialog opens, the label `priority-default` is added to Labels,
+  next to any labels from the rule.
+- As soon as someone picks another priority in the dialog, the label is removed.
+- An issue created without touching Priority keeps the label. Find these issues
+  with the JQL `labels = priority-default`, for example in a triage filter.
+
+The mark works with or without a Priority default in the same rule; a rule can
+consist of the mark alone.
+
+Smart Defaults does not change issues after they are created, so the label stays
+on the issue until someone removes it — for example, when the priority has been
+reviewed.
+
+If someone switches the project or issue type in the dialog, Jira carries the
+filled fields over, Labels included. When the new pair has a Smart Defaults rule
+without the mark, the label is removed. When the new pair has no rule at all,
+the label stays and has to be removed by hand.
+
 ## Current user
 
 For people fields (Assignee, Reporter and the user pickers) you can choose
